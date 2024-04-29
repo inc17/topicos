@@ -10,10 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      
     steps:
+    
       - name: Revisar repositorio
         uses: actions/checkout@v4
-
+        
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v2
         with:
@@ -25,11 +27,10 @@ jobs:
         uses: matlab-actions/run-command@v2
         with:
           command: |
-            addpath('simu')
-            lab2
-            exportgraphics(fig1, 'simu/grafica1.png');
-            exportgraphics(fig2, 'simu/grafica2.png');
-            exportgraphics(fig3, 'simu/grafica3.png');
+            simulacion
+            exportgraphics(fig1, 'grafica1.png');
+            exportgraphics(fig2, 'grafica2.png');
+            exportgraphics(fig3, 'grafica3.png');
 
       - name: Obtener mensaje de commit
         id: obtener_mensaje_de_commit
@@ -43,7 +44,7 @@ jobs:
           COMMIT_MESSAGE="${{ env.COMMIT_MESSAGE }}"
           echo "El valor de COMMIT_MESSAGE es: $COMMIT_MESSAGE"
           mkdir -p "$COMMIT_MESSAGE"
-          cp simu/* "$COMMIT_MESSAGE/"
+          cp  *.png  "$COMMIT_MESSAGE/"
 
 
       - name: Commit y push de la carpeta
